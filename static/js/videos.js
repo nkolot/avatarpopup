@@ -236,7 +236,7 @@ function make_video_carousel(videoPaths, path, element_id, maxVideos, show_capti
 
     var componentVideo = document.createElement("VIDEO");
     componentVideo.loop = true;
-    //componentVideo.playsinline = true;
+    componentVideo.playsinline = true;
     // componentVideo.preload = "metadata";
     componentVideo.muted = true;
     //componentVideo.width = 10000;
@@ -316,7 +316,7 @@ function make_image_video_carousel(imagePaths, path, element_id, maxVideos) {
 
     var componentVideo = document.createElement("VIDEO");
     componentVideo.loop = true;
-    //componentVideo.playsinline = true;
+    componentVideo.playsinline = true;
     // componentVideo.preload = "metadata";
     componentVideo.muted = true;
     componentVideo.width= 512;
