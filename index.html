@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="AvatarPopUp">
+  <meta name="keywords" content="AvatarPopUp, text-to-3d, genai">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instant 3D Human Avatar Generation using Image Diffusion Models</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!--<link rel="icon" href="./static/images/favicon.svg">-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/videos.js"></script>
+  <!-- <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script> -->
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Instant 3D Human Avatar Generation using Image Diffusion Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.nikoskolot.com">Nikos Kolotouros</a>,</span>
+            <span class="author-block">
+                <a href="https://research.google/people/thiemo-alldieck/">Thiemo Alldieck</a>,</span>
+            <span class="author-block">
+              <a href="https://enriccorona.github.io/">Enric Corona</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://research.google/people/eduard-gabriel-bazavan/">Eduard Gabriel Bazavan</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://research.google/people/cristian-sminchisescu/">Cristian Sminchisescu</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Google Research<sup>*</sup> </span>
+          </div>
+
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/*"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/*"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!--
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=*"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              -->
+            </div>
+
+          </div>
+          <div class="content has-text-centered">
+            <sup>*</sup> Now at Google Deepmind.   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.webm"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">AvatarPopUp</span> can generate rigged 3D models from text or  images and has control over pose and body shape.
+        In this example, we show renderings of 35<sup>2</sup> meshes generated from various text prompts in 3.5 hours on a single A100 GPU. 
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          We present <span class="dnerf">AvatarPopUp</span>, a method for fast, high quality 3D human avatar generation from different input modalities,
+          such as images and text prompts and with control over the generated pose and shape.
+          The common theme is the use of diffusion-based image generation networks that are specialized for each particular task, followed by a 3D lifting network.
+          We purposefully decouple generation from 3D modeling which allow us to leverage powerful image synthesis priors, trained on billions of text-image pairs.
+          We fine-tune latent diffusion networks with additional image conditioning to solve tasks such as image generation and back-view prediction,
+          and to support qualitatively different multiple 3D hypotheses.
+          Our partial fine-tuning approach allows to adapt the networks for each task without inducing catastrophic forgetting.
+          In experiments, we demonstrate that our method produces accurate, high-quality 3D avatars with diverse appearance that respect the multimodal text, image, and body control signals.
+          Our approach can produce a 3D model in as few as 2 seconds (<i>four orders of magnitude speedup</i> w.r.t. the vast majority of existing methods,
+          most of them solving only a subset of our tasks, and with fewer controls),
+          thus enabling applications that require controlled 3D generation of human avatars at scale.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!--
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="columns centered">
+          <img src="./static/images/method_teaser.png"
+               alt="Method teaser."/>
+        </div>
+        <div class="content has-text-justified">
+        <span class="dnerf">AvatarPopUp</span> builds on the capacity of text-to-image models to generate highly detailed and diverse input images.
+        First, a Latent Diffusion network takes a text prompt and a target body pose and shape G,
+        and generates a highly detailed front image of a person.
+        Next, a second network generates a consistent back view in the same pose and clothing.
+        We then perform pixel-aligned 3D reconstruction given the generated back/front views/images and/or a given 3D body pose and shape G.
+        This decoupling enables the generation of 3D avatars from either text or a single image.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Image to 3D</h2>
+        
+        <div class="content has-text-justified">
+        <span class="dnerf">AvatarPopUp</span> can be used for image-to-3D synthesis.
+        We do so by first predicting a plausible back view using our back image generator, and then lift the image pair to 3D using our 3D lifter.
+        The entire image-to-mesh process takes less than 10 seconds.
+        </div>
+        
+        <section class="image-to-3d is-small is-light">
+          <div class="image-to-3d-body">
+            <div class="container">
+              <div id="image-to-3d-carousel">
+              <script>
+                make_image_video_carousel(image23dImages , "static/image23d/", "image-to-3d-carousel", 50);
+              </script>
+              </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Text to 3D</h2>
+        
+        <div class="content has-text-justified">
+        <span class="dnerf">AvatarPopUp</span> can be used for text-to-3D synthesis.
+        Given text, pose, and body shape controls we use cascaded diffusion networks to sample front and back views.
+        Our 3D lifter then outputs a 3D mesh given the image evidence. The whole process takes less than 10 seconds per example on an A100 GPU.    
+        </div>
+
+        <div class="columns centered">
+          <img src="./static/images/text_to_3d_teaser.png"
+               alt="text-to-3d teaser."/>
+        </div>
+
+        <div class="content has-text-centered">
+        All 77 meshes in the above image were generated in <em>under 12 minutes</em>  .   
+        </div>
+
+        <div class="content has-text-justified">
+        We also show a large number of 360<sup>o</sup> renderings of our text-based generations, where we sampled random poses, body shapes and text prompts.
+        </div>
+
+
+        
+        <div class="content has-text-centered">
+        <em><b>A person wearing ...</b></em>
+        </div>
+        <section class="text-to-3d is-small is-light">
+          <div class="text-to-3d-body">
+            <div class="container">
+              <div id="text-to-3d-carousel">
+              <script>
+                make_video_carousel(text23dVideos , "static/text23d/", "text-to-3d-carousel", 50);
+              </script>
+              </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Text + Image to 3D</h2>
+        <div class="content has-text-justified">
+        With <span class="dnerf">AvatarPopUp</span> we can do multimodal 3D generation. One use case is 3D virtual try-on.
+        Given an image of a person and a text prompt describing the clothing, we can generate a 3D avatar wearing the target clothing,
+        while at the same time preserving the identity (face + body shape) of the person in the source image.
+        </div>
+        <div class="columns centered">
+          <img src="./static/images/tryon1.svg">
+        </div>
+        <div class="content has-text-justified">
+        Our method also allows more fine-grained modifications.
+        For example we can change only specific garments,
+        or we can sample new identities wearing the same clothes.
+      </div>
+        <div class="columns centered">
+          <img src="./static/images/tryon2.svg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  </div>
+</section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Animating avatars</h2>
+          
+          <div class="content has-text-justified">
+          With <span class="dnerf">AvatarPopUp</span> we can generate animation-ready avatars.
+          We first generate an avatar in an animation-friendly pose and then leverage the conditioning body model to rig the estimated 3D shape.
+          As a result of our conditioning strategy, 3D avatars and the conditional body model instances are well-aligned in 3D.
+          This allows us to anchor the reconstructed 3D shape on the body model surface and rig it accordingly.
+          </div>
+  
+  
+  
+          
+          <div class="content has-text-centered">
+          </div>
+          <section class="animations is-small is-light">
+            <div class="animations-body">
+              <div class="container">
+                <div id="animations-carousel">
+                <script>
+                  make_video_carousel(animations , "static/animations/", "animations-carousel", 50, false);
+                </script>
+                </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{kolotouros2024avatarpopup,
+  author    = {Kolotouros, Nikos and Alldieck, Thiemo and Corona, Enric and Bazavan, Eduard Gabriel and Sminchisescu, Cristian},
+  title     = {Instant 3D Human Avatar Generation using Image Diffusion Models},
+  journal   = {arXiv},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The website design is based on <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
