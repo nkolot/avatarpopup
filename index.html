@@ -63,7 +63,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/*"
+                <a href="https://arxiv.org/pdf/2406.07516"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -72,7 +72,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/*"
+                <a href="https://arxiv.org/abs/2406.07516"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -129,15 +129,7 @@
         <div class="content has-text-justified">
           We present <span class="dnerf">AvatarPopUp</span>, a method for fast, high quality 3D human avatar generation from different input modalities,
           such as images and text prompts and with control over the generated pose and shape.
-          The common theme is the use of diffusion-based image generation networks that are specialized for each particular task, followed by a 3D lifting network.
-          We purposefully decouple generation from 3D modeling which allow us to leverage powerful image synthesis priors, trained on billions of text-image pairs.
-          We fine-tune latent diffusion networks with additional image conditioning to solve tasks such as image generation and back-view prediction,
-          and to support qualitatively different multiple 3D hypotheses.
-          Our partial fine-tuning approach allows to adapt the networks for each task without inducing catastrophic forgetting.
-          In experiments, we demonstrate that our method produces accurate, high-quality 3D avatars with diverse appearance that respect the multimodal text, image, and body control signals.
-          Our approach can produce a 3D model in as few as 2 seconds (<i>four orders of magnitude speedup</i> w.r.t. the vast majority of existing methods,
-          most of them solving only a subset of our tasks, and with fewer controls),
-          thus enabling applications that require controlled 3D generation of human avatars at scale.
+         The common theme is the use of diffusion-based image generation networks that are specialized for each particular task, followed by a 3D lifting network. We purposefully decouple the generation from the 3D modeling which allow us to leverage powerful image synthesis priors, trained on billions of text-image pairs. We fine-tune latent diffusion networks with additional image conditioning to solve tasks such as image generation and back-view prediction, and to support qualitatively different multiple 3D hypotheses. Our partial fine-tuning approach allows to adapt the networks for each task without inducing catastrophic forgetting. In our experiments, we demonstrate that our method produces accurate, high-quality 3D avatars with diverse appearance that respect the multimodal text, image, and body control signals. Our approach can produce a 3D model in as few as 2 seconds, a four orders of magnitude speedup w.r.t. the vast majority of existing methods, most of which solve only a subset of our tasks, and with fewer controls, thus enabling applications that require the controlled 3D generation of human avatars at scale.
         </div>
       </div>
     </div>
